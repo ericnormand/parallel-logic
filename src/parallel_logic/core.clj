@@ -1,5 +1,5 @@
 (ns parallel-logic.core
-  (:require [clojure.core.async :as async :refer [chan close! >!! <!! alts!! put!]]))
+  (:require [clojure.core.async :as async :refer [alts!!]]))
 
 (def ^:dynamic *var-count* (atom 0))
 
@@ -9,10 +9,29 @@
 (defn var? [x]
   (and (symbol? x) (= "v" (namespace x))))
 
+(defrecord ChannelPair [value-ch close-ch])
+
+(defn chan []
+  (->ChannelPair (async/chan) (async/chan)))
+
+(defn close! [channel-pair]
+  (async/close! (.value-ch channel-pair))
+  (async/close! (.close-ch channel-pair)))
+
+(defn put! [channel-pair val]
+  (async/>!! (.value-ch channel-pair) val))
+
+(defn read [channel-pair]
+  (let [[val port] (alts!! [(.value-ch channel-pair)
+                            (.close-ch channel-pair)])]
+    (if (= port (.close-ch channel-pair))
+      ::die
+      val)))
+
 (defn walk [term subst]
   (if (var? term)
     (if-let [val (get subst term)]
-      (walk val subst)
+      (recur val subst)
       term)
     term))
 
@@ -64,14 +83,14 @@
 
 (defn === [u v]
   (fn [s]
-    (let [result-ch (chan)]
+    (let [ch (chan)]
       (Thread/startVirtualThread
        (fn []
          (let [delta (delta-unify s u v)]
            (when delta
-             (>!! result-ch (merge s delta)))
-           (close! result-ch))))
-      result-ch)))
+             (put! ch (merge s delta))))
+         (close! ch)))
+      ch)))
 
 (defn disjoin
   ([]
@@ -82,18 +101,29 @@
    goal)
   ([goal1 goal2]
    (fn [s]
-     (let [result-ch (chan)]
+     (let [ch (chan)]
        (Thread/startVirtualThread
         (fn []
-          (loop [active-chs [(goal1 s) (goal2 s)]]
-            (when (seq active-chs)
-              (let [[val port] (async/alts!! active-chs)]
-                (if (nil? val)
-                  (recur (remove #(= % port) active-chs))
-                  (do (>!! result-ch val)
+          (let [s1 (goal1 s)
+                s2 (goal2 s)]
+            (loop [active-chs [(.value-ch s1) (.value-ch s2)]]
+              (when (seq active-chs)
+                (let [[val port] (async/alts!! (conj active-chs (.close-ch ch)))]
+                  (cond
+                    (= port (.close-ch ch))
+                    nil
+
+                    (nil? val)
+                    (recur (remove #(= % port) active-chs))
+
+                    :else
+                    (do
+                      (put! ch val)
                       (recur active-chs))))))
-          (close! result-ch)))
-       result-ch)))
+            (close! ch)
+            (close! s1)
+            (close! s2))))
+       ch)))
   ([goal1 goal2 & more-goals]
    (reduce disjoin (disjoin goal1 goal2) more-goals)))
 
@@ -121,22 +151,31 @@
                                 :acc #{}}}]
                 (let [remaining-chans (->> state
                                            (filter #(:open? (val %)))
-                                           (mapv key))]
+                                           (mapv key)
+                                           (mapv #(.value-ch %)))]
                   (when (seq remaining-chans)
-                    (let [[val port] (async/alts!! remaining-chans)]
-                      (if (nil? val)
+                    (let [[val port] (async/alts!! (conj remaining-chans
+                                                         (.close-ch result-ch)))]
+                      (cond
+                        (= port (.close-ch result-ch))
+                        nil
+
+                        (nil? val)
                         (recur (assoc-in state [port :open?] false))
 
+                        :else
                         (do
                           (doseq [v (get-in state [(get-in state [port :other]) :acc])]
                             (let [u (unify s val v)]
                               (when u
-                                (>!! result-ch u))))
+                                (put! result-ch u))))
                           (recur (update-in state [port :acc] conj val))))))))
               (catch Throwable t
                 (println "Error:" t))
               (finally
-                (close! result-ch))))))
+                (close! result-ch)
+                (close! s1)
+                (close! s2))))))
        result-ch)))
   ([goal1 goal2 & more-goals]
    (reduce conjoin (conjoin goal1 goal2) more-goals)))
@@ -152,17 +191,18 @@
         timeout-ch (async/timeout t)]
     (Thread/startVirtualThread
      (fn []
-       (let [[val _port] (async/alts!! [stream timeout-ch])]
-         (if (nil? val)
-           (close! result-ch)
-           (do
-             (>!! result-ch val)
-             (recur))))))
+       (loop []
+         (let [[val _port] (async/alts!! [(.value-ch stream) (.close-ch result-ch) timeout-ch])]
+           (when val
+             (put! result-ch val)
+             (recur))))
+       (close! result-ch)
+       (close! stream)))
     result-ch))
 
 (defn channel->set [ch]
   (loop [results #{}]
-    (let [val (<!! ch)]
+    (let [val (async/<!! (.value-ch ch))]
       (if (nil? val)
         (when (seq results) results)
         (recur (conj results val))))))
@@ -177,12 +217,9 @@
          (channel->set)
          (mapv #(walk q %)))))
 
-
-
 (defmacro inv [g]
   `(fn [sc#]
      (~g sc#)))
-
 
 (defmacro disj+
   ([]
@@ -192,13 +229,37 @@
   ([g & gs]
    `(disjoin (disj+ ~g) (disj+ ~@gs))))
 
-
 (defn fives [x]
   (disj+ (=== 5 x)
-         (fives x)))
+         (=== x 5)))
 
 (comment
 
   (runt 3000 (v q) (=== [(v q)] [8]))
 
   (runt 3000 (v q) (fives (v q))))
+
+(defn conso [a d q]
+  (=== (cons a d) q))
+
+(runt 1000 (v q) (conso 1 '(2 3) (v q)))
+
+(defn membero [v lst]
+  (fresh
+   (fn [head]
+     (fresh
+      (fn [tail]
+        (conjoin
+         (conso head tail lst)
+         (disjoin
+          (=== v head)
+          (membero v tail))))))))
+
+(comment
+  (runt 1000 (v q) (conso 1 (v q) [1 2 3]))
+
+
+  (runt 1000 (v q) (membero 4 (list 1 2 3 (v q) 5))))
+
+;; todo: tests for termination
+;; todo: test progress
