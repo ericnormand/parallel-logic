@@ -74,23 +74,23 @@
     (is (false? (sut/var? [1 2 3])))
     (is (false? (sut/var? 'other/namespaced)))))
 
-(deftest ==-basic-test
-  (testing "basic == goal functionality"
-    (is (= #{{}} (channel->set ((sut/== 5 5) {}))))
-    (is (= nil (channel->set ((sut/== 5 7) {}))))
-    (is (= #{{(v x) 5}} (channel->set ((sut/== (v x) 5) {}))))
-    (is (= #{{(v y) (v x)}} (channel->set ((sut/== (v x) (v y)) {}))))
-    (is (= #{{}} (channel->set ((sut/== (v x) 5) {(v x) 5}))))
-    (is (= nil (channel->set ((sut/== (v x) 7) {(v x) 5}))))))
+(deftest ===-basic-test
+  (testing "basic === goal functionality"
+    (is (= #{{}} (channel->set ((sut/=== 5 5) {}))))
+    (is (= nil (channel->set ((sut/=== 5 7) {}))))
+    (is (= #{{(v x) 5}} (channel->set ((sut/=== (v x) 5) {}))))
+    (is (= #{{(v y) (v x)}} (channel->set ((sut/=== (v x) (v y)) {}))))
+    (is (= #{{}} (channel->set ((sut/=== (v x) 5) {(v x) 5}))))
+    (is (= nil (channel->set ((sut/=== (v x) 7) {(v x) 5}))))))
 
-(deftest ==-commutative-test
-  (testing "commutativity of == goal"
-    (is (= (channel->set ((sut/== 5 (v x)) {}))
-           (channel->set ((sut/== (v x) 5) {}))))
-    (is (= (channel->set ((sut/== (v x) (v y)) {}))
-           (channel->set ((sut/== (v y) (v x)) {}))))
-    (is (= (channel->set ((sut/== [1 (v x)] [1 2]) {}))
-           (channel->set ((sut/== [1 2] [1 (v x)]) {}))))))
+(deftest ===-commutative-test
+  (testing "commutativity of === goal"
+    (is (= (channel->set ((sut/=== 5 (v x)) {}))
+           (channel->set ((sut/=== (v x) 5) {}))))
+    (is (= (channel->set ((sut/=== (v x) (v y)) {}))
+           (channel->set ((sut/=== (v y) (v x)) {}))))
+    (is (= (channel->set ((sut/=== [1 (v x)] [1 2]) {}))
+           (channel->set ((sut/=== [1 2] [1 (v x)]) {}))))))
 
 (deftest disj-test
   (testing "disjunction goal"
@@ -98,18 +98,18 @@
       (is (= nil (channel->set ((sut/disjoin) {})))))
 
     (testing "one argument - return goal stream directly"
-      (is (= #{{(v x) 5}} (channel->set ((sut/disjoin (sut/== (v x) 5)) {}))))
-      (is (= nil (channel->set ((sut/disjoin (sut/== 5 7)) {})))))
+      (is (= #{{(v x) 5}} (channel->set ((sut/disjoin (sut/=== (v x) 5)) {}))))
+      (is (= nil (channel->set ((sut/disjoin (sut/=== 5 7)) {})))))
 
     (testing "two arguments - merge streams"
-      (is (= #{{(v x) 1} {(v x) 2}} (channel->set ((sut/disjoin (sut/== (v x) 1) (sut/== (v x) 2)) {}))))
-      (is (= #{{(v x) 1}} (channel->set ((sut/disjoin (sut/== (v x) 1) (sut/== 5 7)) {}))))
-      (is (= #{{(v x) 2}} (channel->set ((sut/disjoin (sut/== 5 7) (sut/== (v x) 2)) {}))))
-      (is (= nil (channel->set ((sut/disjoin (sut/== 5 7) (sut/== 3 4)) {})))))
+      (is (= #{{(v x) 1} {(v x) 2}} (channel->set ((sut/disjoin (sut/=== (v x) 1) (sut/=== (v x) 2)) {}))))
+      (is (= #{{(v x) 1}} (channel->set ((sut/disjoin (sut/=== (v x) 1) (sut/=== 5 7)) {}))))
+      (is (= #{{(v x) 2}} (channel->set ((sut/disjoin (sut/=== 5 7) (sut/=== (v x) 2)) {}))))
+      (is (= nil (channel->set ((sut/disjoin (sut/=== 5 7) (sut/=== 3 4)) {})))))
 
     (testing "three arguments - recursive merge"
       (is (= #{{(v x) 1} {(v x) 2} {(v x) 3}}
-             (channel->set ((sut/disjoin (sut/== (v x) 1) (sut/== (v x) 2) (sut/== (v x) 3)) {})))))))
+             (channel->set ((sut/disjoin (sut/=== (v x) 1) (sut/=== (v x) 2) (sut/=== (v x) 3)) {})))))))
 
 (deftest conj-test
   (testing "conjunction goal"
@@ -117,31 +117,30 @@
       (is (= #{{}} (channel->set ((sut/conjoin) {})))))
 
     (testing "one argument - return goal stream directly"
-      (is (= #{{(v x) 5}} (channel->set ((sut/conjoin (sut/== (v x) 5)) {}))))
-      (is (= nil (channel->set ((sut/conjoin (sut/== 5 7)) {})))))
+      (is (= #{{(v x) 5}} (channel->set ((sut/conjoin (sut/=== (v x) 5)) {}))))
+      (is (= nil (channel->set ((sut/conjoin (sut/=== 5 7)) {})))))
 
     (testing "two arguments - unify deltas"
       (is (= #{{(v x) 1 (v y) 2}}
-             (channel->set ((sut/conjoin (sut/== (v x) 1)
-                                         (sut/== (v y) 2))
+             (channel->set ((sut/conjoin (sut/=== (v x) 1)
+                                         (sut/=== (v y) 2))
                             {}))))
-      (is (= #{{(v x) 5}} (channel->set ((sut/conjoin (sut/== (v x) 5) (sut/== (v x) 5)) {}))))
-      (is (= nil (channel->set ((sut/conjoin (sut/== (v x) 1) (sut/== (v x) 2)) {}))))
-      (is (= nil (channel->set ((sut/conjoin (sut/== 5 7) (sut/== (v x) 2)) {})))))
+      (is (= #{{(v x) 5}} (channel->set ((sut/conjoin (sut/=== (v x) 5) (sut/=== (v x) 5)) {}))))
+      (is (= nil (channel->set ((sut/conjoin (sut/=== (v x) 1) (sut/=== (v x) 2)) {}))))
+      (is (= nil (channel->set ((sut/conjoin (sut/=== 5 7) (sut/=== (v x) 2)) {})))))
 
     (testing "three arguments - recursive unification"
       (is (= #{{(v x) 1 (v y) 2 (v z) 3}}
-             (channel->set ((sut/conjoin (sut/== (v x) 1) (sut/== (v y) 2) (sut/== (v z) 3)) {}))))
+             (channel->set ((sut/conjoin (sut/=== (v x) 1) (sut/=== (v y) 2) (sut/=== (v z) 3)) {}))))
       (is (= #{{(v x) 5}}
-             (channel->set ((sut/conjoin (sut/== (v x) 5) (sut/== (v x) 5) (sut/== (v x) 5)) {}))))
+             (channel->set ((sut/conjoin (sut/=== (v x) 5) (sut/=== (v x) 5) (sut/=== (v x) 5)) {}))))
       (is (= nil
-             (channel->set ((sut/conjoin (sut/== (v x) 1) (sut/== (v x) 2) (sut/== (v x) 3)) {})))))))
+             (channel->set ((sut/conjoin (sut/=== (v x) 1) (sut/=== (v x) 2) (sut/=== (v x) 3)) {})))))))
 
 ;; todo: test that there is fairness
 
 ;; todo: test disj is commutative
 ;; todo: test conj is commutative
-
 
 (comment
   (channel->set ((sut/conjoin (sut/conjoin) (sut/conjoin)) {}))

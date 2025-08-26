@@ -27,7 +27,7 @@ The main implementation containing all core logic programming primitives:
 
 - **Variable System**: `v` macro and `var?` predicate for creating and identifying logic variables
 - **Unification Engine**: `delta-unify` for constraint solving and `unify` for merging solutions  
-- **Goal Constructors**: `==` for equality constraints, `disjoin` for OR, `conjoin` for AND
+- **Goal Constructors**: `===` for equality constraints, `disjoin` for OR, `conjoin` for AND
 - **Substitution Utilities**: `walk` for variable resolution in substitutions
 
 ### `/test/parallel_logic/core_test.clj`
@@ -60,17 +60,17 @@ Project configuration with minimal dependencies:
 (require '[parallel-logic.core :as logic])
 
 ;; Unify a variable with a value
-((logic/== (v x) 5) {})  ; Returns channel with solution {v/x 5}
+((logic/=== (v x) 5) {})  ; Returns channel with solution {v/x 5}
 
 ;; Unify two variables
-((logic/== (v x) (v y)) {})  ; Returns channel with solution {v/y v/x}
+((logic/=== (v x) (v y)) {})  ; Returns channel with solution {v/y v/x}
 ```
 
 ### Disjunction (OR Logic)
 ```clojure
 ;; x can be either 1 OR 2
-(let [goal (logic/disjoin (logic/== (v x) 1)
-                         (logic/== (v x) 2))]
+(let [goal (logic/disjoin (logic/=== (v x) 1)
+                         (logic/=== (v x) 2))]
   (channel->set (goal {})))
 ;; => #{{v/x 1} {v/x 2}}
 ```
@@ -78,8 +78,8 @@ Project configuration with minimal dependencies:
 ### Conjunction (AND Logic)  
 ```clojure
 ;; x must be 1 AND y must be 2
-(let [goal (logic/conjoin (logic/== (v x) 1)
-                         (logic/== (v y) 2))]
+(let [goal (logic/conjoin (logic/=== (v x) 1)
+                         (logic/=== (v y) 2))]
   (channel->set (goal {})))
 ;; => #{{v/x 1, v/y 2}}
 ```
@@ -87,7 +87,7 @@ Project configuration with minimal dependencies:
 ### Collection Unification
 ```clojure
 ;; Unify vectors element-wise
-((logic/== [(v x) (v y)] [1 2]) {})
+((logic/=== [(v x) (v y)] [1 2]) {})
 ;; Returns channel with solution {v/x 1, v/y 2}
 ```
 

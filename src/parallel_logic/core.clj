@@ -60,7 +60,7 @@
                 nil
                 (recur (rest vars) (merge result (assoc unified-delta var walked-val1)))))))))))
 
-(defn == [u v]
+(defn === [u v]
   (fn [s]
     (let [result-ch (chan)]
       (Thread/startVirtualThread
