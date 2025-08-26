@@ -6,7 +6,6 @@
 (defn channel->set [ch]
   (loop [results #{}]
     (let [val (<!! ch)]
-      (println "Channel value:" val)
       (if (nil? val)
         (when (seq results) results)
         (recur (conj results val))))))
@@ -80,7 +79,7 @@
     (is (= nil (channel->set ((sut/=== 5 7) {}))))
     (is (= #{{(v x) 5}} (channel->set ((sut/=== (v x) 5) {}))))
     (is (= #{{(v y) (v x)}} (channel->set ((sut/=== (v x) (v y)) {}))))
-    (is (= #{{}} (channel->set ((sut/=== (v x) 5) {(v x) 5}))))
+    (is (= #{{(v x) 5}} (channel->set ((sut/=== (v x) 5) {(v x) 5}))))
     (is (= nil (channel->set ((sut/=== (v x) 7) {(v x) 5}))))))
 
 (deftest ===-commutative-test
@@ -91,6 +90,13 @@
            (channel->set ((sut/=== (v y) (v x)) {}))))
     (is (= (channel->set ((sut/=== [1 (v x)] [1 2]) {}))
            (channel->set ((sut/=== [1 2] [1 (v x)]) {}))))))
+
+(deftest ===-with-substitutions-test
+  (testing "=== goal with existing substitutions"
+    (is (= #{{(v x) 5}} (channel->set ((sut/=== (v x) 5) {(v x) 5}))))
+    (is (= nil (channel->set ((sut/=== (v x) 7) {(v x) 5}))))
+    (is (= #{{(v x) 5 (v y) 5}} (channel->set ((sut/=== (v y) (v x)) {(v x) 5}))))
+    (is (= #{{(v x) 5 (v y) 5}} (channel->set ((sut/=== (v y) 5) {(v x) 5}))))))
 
 (deftest disj-test
   (testing "disjunction goal"
@@ -110,6 +116,15 @@
     (testing "three arguments - recursive merge"
       (is (= #{{(v x) 1} {(v x) 2} {(v x) 3}}
              (channel->set ((sut/disjoin (sut/=== (v x) 1) (sut/=== (v x) 2) (sut/=== (v x) 3)) {})))))))
+
+(deftest disj-with-substitutions-test
+  (testing "disjunction with existing substitutions"
+    (is (= #{{(v x) 5 (v y) 1} {(v x) 5 (v y) 2}}
+           (channel->set ((sut/disjoin (sut/=== (v y) 1) (sut/=== (v y) 2)) {(v x) 5}))))
+    (is (= #{{(v x) 5}}
+           (channel->set ((sut/disjoin (sut/=== (v x) 5) (sut/=== (v x) 7)) {(v x) 5}))))
+    (is (= nil
+           (channel->set ((sut/disjoin (sut/=== (v x) 7) (sut/=== (v x) 8)) {(v x) 5}))))))
 
 (deftest conj-test
   (testing "conjunction goal"
@@ -136,6 +151,39 @@
              (channel->set ((sut/conjoin (sut/=== (v x) 5) (sut/=== (v x) 5) (sut/=== (v x) 5)) {}))))
       (is (= nil
              (channel->set ((sut/conjoin (sut/=== (v x) 1) (sut/=== (v x) 2) (sut/=== (v x) 3)) {})))))))
+
+(deftest conj-with-substitutions-test
+  (testing "conjunction with existing substitutions"
+    (is (= #{{(v x) 5 (v y) 2}}
+           (channel->set ((sut/conjoin (sut/=== (v x) 5) (sut/=== (v y) 2)) {(v x) 5}))))
+    (is (= #{{(v x) 5}}
+           (channel->set ((sut/conjoin (sut/=== (v x) 5) (sut/=== (v x) 5)) {(v x) 5}))))
+    (is (= nil
+           (channel->set ((sut/conjoin (sut/=== (v x) 5) (sut/=== (v x) 7)) {(v x) 5}))))
+    (is (= #{{(v x) 1 (v y) (v x)}}
+           (channel->set ((sut/conjoin (sut/=== (v x) 1) (sut/=== (v y) (v x))) {}))))))
+
+(deftest fresh-test
+  (testing "fresh variable generation"
+    ;; Reset counter for predictable test results
+    (reset! sut/*var-count* 0)
+    (is (= #{{(symbol "v" "1") 42}}
+           (channel->set ((sut/fresh (fn [x] (sut/=== x 42))) {}))))
+
+    ;; Test multiple fresh variables
+    (reset! sut/*var-count* 0)
+    (let [goal (sut/fresh (fn [x]
+                            (sut/fresh (fn [y]
+                                         (sut/conjoin
+                                          (sut/=== x 1)
+                                          (sut/=== y 2))))))]
+      (is (= #{{(symbol "v" "1") 1 (symbol "v" "2") 2}}
+             (channel->set (goal {})))))
+
+    ;; Test fresh with existing substitutions
+    (reset! sut/*var-count* 0)
+    (is (= #{{(v x) 5 (symbol "v" "1") 10}}
+           (channel->set ((sut/fresh (fn [y] (sut/=== y 10))) {(v x) 5}))))))
 
 ;; todo: test that there is fairness
 

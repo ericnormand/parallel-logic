@@ -1,6 +1,8 @@
 (ns parallel-logic.core
   (:require [clojure.core.async :as async :refer [chan close! >!! <!! alts!! put!]]))
 
+(def ^:dynamic *var-count* (atom 0))
+
 (defmacro v [sym]
   `(symbol "v" ~(name sym)))
 
@@ -67,7 +69,7 @@
        (fn []
          (let [delta (delta-unify s u v)]
            (when delta
-             (>!! result-ch delta))
+             (>!! result-ch (merge s delta)))
            (close! result-ch))))
       result-ch)))
 
@@ -134,10 +136,69 @@
               (catch Throwable t
                 (println "Error:" t))
               (finally
-                (close! result-ch)
-                (close! s1)
-                (close! s2))))))
+                (close! result-ch))))))
        result-ch)))
   ([goal1 goal2 & more-goals]
    (reduce conjoin (conjoin goal1 goal2) more-goals)))
 
+(defn fresh [f]
+  (fn [s]
+    (let [count (swap! *var-count* inc)
+          new-var (symbol "v" (str count))]
+      ((f new-var) s))))
+
+(defn collect-timeout [t stream]
+  (let [result-ch (chan)
+        timeout-ch (async/timeout t)]
+    (Thread/startVirtualThread
+     (fn []
+       (let [[val _port] (async/alts!! [stream timeout-ch])]
+         (if (nil? val)
+           (close! result-ch)
+           (do
+             (>!! result-ch val)
+             (recur))))))
+    result-ch))
+
+(defn channel->set [ch]
+  (loop [results #{}]
+    (let [val (<!! ch)]
+      (if (nil? val)
+        (when (seq results) results)
+        (recur (conj results val))))))
+
+(defn runt [t q goal]
+  (binding [*var-count* (atom 0)]
+    (->> ((fresh (fn [v]
+                   (fn [s]
+                     (goal (assoc s q v)))))
+          {})
+         (collect-timeout t)
+         (channel->set)
+         (mapv #(walk q %)))))
+
+
+
+(defmacro inv [g]
+  `(fn [sc#]
+     (~g sc#)))
+
+
+(defmacro disj+
+  ([]
+   (disjoin))
+  ([g]
+   `(inv ~g))
+  ([g & gs]
+   `(disjoin (disj+ ~g) (disj+ ~@gs))))
+
+
+(defn fives [x]
+  (disj+ (=== 5 x)
+         (fives x)))
+
+(comment
+
+  (runt 3000 (v q) (=== [(v q)] [8]))
+
+  (runt 3000 (v q) (fives (v q))))
