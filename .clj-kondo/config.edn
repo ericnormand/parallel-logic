@@ -1,0 +1,1 @@
+{:lint-as {parallel-logic.core/v clojure.core/identity}}

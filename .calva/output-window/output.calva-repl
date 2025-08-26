@@ -1,0 +1,1342 @@
+; This is the Calva REPL Window.
+; It's just a file, really, with some special treatment from Calva.
+; Use it as a REPL input prompt if you like. (When the REPL is connected.)
+; TIPS: The keyboard shortcut `ctrl+alt+o r` shows and focuses this window
+; Please see https://calva.io/repl-window/ for more info.
+; Happy coding! ♥️
+
+; TIPS: As with any Clojure file when the REPL is connected:
+; - `alt+enter` evaluates the current top level form.
+; - `ctrl+enter` evaluates the current form.
+; Special for this file:
+; - `alt+up` and `alt+down` traverse up and down the REPL command history
+;    when the cursor is after the last contents at the prompt
+; 
+; See also the Calva Inspector: https://calva.io/inspector/
+
+PLEASE NOTE
+We will update the default location of this file.
+The new default location will be
+  "<projectRootPath>/.calva/repl.calva-repl"
+For now the legacy path is used by default.
+To give yourself a smooth transition, you can opt in
+to the change, by configuring this setting as false:
+  "calva.useLegacyReplWindowPath"
+and then add "**/.calva/repl.calva-repl" to your ".gitignore" file.
+
+
+This file is configured as the output destination for all REPL output.
+You can configure this with the setting:
+  "calva.outputDestinations"
+
+
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Starting Jack-in: (cd /Users/ericnormand/projects/parallel-logic; clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.3.1"},cider/cider-nrepl {:mvn/version,"0.55.4"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]")
+; Using host:port localhost:53194 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉user꞉> 
+"Please see https://calva.io/output/#about-stdout-in-the-repl-window
+about why stdout printed to this file is prepended with `;` to be line comments."
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Evaluating file: core_test.clj
+; 
+; ; clj  parallel-logic.core-test 
+; Syntax error compiling at (test/parallel_logic/core_test.clj:1:1).
+; namespace 'parallel-logic.core' not found after loading '/parallel_logic/core'
+; Evaluation of file core_test.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉parallel-logic.core-test꞉> 
+; Evaluating file: core_test.clj
+; 
+; WARNING: var? already refers to: #'clojure.core/var? in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/var?
+#'parallel-logic.core-test/var?-test
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core-test/v-macro-test
+clj꞉parallel-logic.core-test꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; FAIL in parallel-logic.core-test/delta-unify-merge-test (core_test.clj:29):
+; merging two deltas
+; expected:
+(= {'x 1} (sut/unify {} {'x 1} {'x 1}))
+
+; actual:
+(not (= {x 1} {}))
+
+; FAIL in parallel-logic.core-test/delta-unify-merge-test (core_test.clj:31):
+; merging two deltas
+; expected:
+(=
+ {'x (symbol "#0"), 'y (symbol "#0")}
+ (sut/unify {(symbol "#0") 5} {'x (symbol "#0")} {'y (symbol "#0")}))
+
+; actual:
+(not (= {x #0, y #0} {x 5, y 5}))
+
+; FAIL in parallel-logic.core-test/var?-test (core_test.clj:48):
+; variable predicate
+; expected:
+(false? (sut/var? 'x))
+
+; actual:
+(not (false? true))
+
+; FAIL in parallel-logic.core-test/var?-test (core_test.clj:53):
+; variable predicate
+; expected:
+(false? (sut/var? 'other/namespaced))
+
+; actual:
+(not (false? true))
+
+; 30 tests finished, problems found. 😭 errors: 0, failures: 4, ns: 1, vars: 6
+clj꞉parallel-logic.core-test꞉> 
+; Running test: v-macro-test…
+; 6 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+; Running test: var?-test…
+; FAIL in parallel-logic.core-test/var?-test (core_test.clj:48):
+; variable predicate
+; expected:
+(false? (sut/var? 'x))
+
+; actual:
+(not (false? true))
+
+; FAIL in parallel-logic.core-test/var?-test (core_test.clj:53):
+; variable predicate
+; expected:
+(false? (sut/var? 'other/namespaced))
+
+; actual:
+(not (false? true))
+
+; 8 tests finished, problems found. 😭 errors: 0, failures: 2, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+; Running test: var?-test…
+; FAIL in parallel-logic.core-test/var?-test (core_test.clj:48):
+; variable predicate
+; expected:
+(false? (sut/var? 'x))
+
+; actual:
+(not (false? true))
+
+; FAIL in parallel-logic.core-test/var?-test (core_test.clj:53):
+; variable predicate
+; expected:
+(false? (sut/var? 'other/namespaced))
+
+; actual:
+(not (false? true))
+
+; 8 tests finished, problems found. 😭 errors: 0, failures: 2, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/unify
+clj꞉parallel-logic.core꞉> 
+v/foo
+clj꞉parallel-logic.core-test꞉> 
+; Running test: var?-test…
+; FAIL in parallel-logic.core-test/var?-test (core_test.clj:48):
+; variable predicate
+; expected:
+(false? (sut/var? 'x))
+
+; actual:
+(not (false? true))
+
+; FAIL in parallel-logic.core-test/var?-test (core_test.clj:53):
+; variable predicate
+; expected:
+(false? (sut/var? 'other/namespaced))
+
+; actual:
+(not (false? true))
+
+; 8 tests finished, problems found. 😭 errors: 0, failures: 2, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/unify
+clj꞉parallel-logic.core꞉> 
+; Running test: var?-test…
+; 8 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core_test.clj
+#'parallel-logic.core-test/var?-test
+clj꞉parallel-logic.core-test꞉> 
+; Running test: var?-test…
+; 8 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core-test/unify-test
+clj꞉parallel-logic.core-test꞉> 
+; Running test: unify-test…
+; FAIL in parallel-logic.core-test/unify-test (NO_SOURCE_FILE:34):
+; merging two deltas
+; expected:
+{x 1}
+
+; actual:
+{}
+
+; diff:
+- {x 1}
+
++ nil
+
+; 4 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core/v
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core_test.clj
+#'parallel-logic.core-test/var?-test
+clj꞉parallel-logic.core-test꞉> 
+; Running test: delta-unify-with-substitutions-test…
+; 4 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; FAIL in parallel-logic.core-test/delta-unify-commutative-test (core_test.clj:29):
+; commutativity of delta-unify
+; expected:
+#:v{x v/y}
+
+; actual:
+#:v{y v/x}
+
+; diff:
+- #:v{x v/y}
+
++ #:v{y v/x}
+
+; FAIL in parallel-logic.core-test/delta-unify-merge-test (core_test.clj:29):
+; merging two deltas
+; expected:
+{x 1}
+
+; actual:
+{}
+
+; diff:
+- {x 1}
+
++ nil
+
+; FAIL in parallel-logic.core-test/unify-test (core_test.clj:34):
+; merging two deltas
+; expected:
+#:v{x 1}
+
+; actual:
+{}
+
+; diff:
+- #:v{x 1}
+
++ nil
+
+; FAIL in parallel-logic.core-test/unify-test (core_test.clj:36):
+; merging two deltas
+; expected:
+#:v{x v/z, y v/z}
+
+; actual:
+#:v{x 5, y 5}
+
+; diff:
+- #:v{x v/z, y v/z}
+
++ #:v{x 5, y 5}
+
+; 36 tests finished, problems found. 😭 errors: 0, failures: 4, ns: 1, vars: 8
+clj꞉parallel-logic.core-test꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Starting Jack-in: (cd /Users/ericnormand/projects/parallel-logic; clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.3.1"},cider/cider-nrepl {:mvn/version,"0.55.4"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]")
+; Using host:port localhost:55823 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Evaluating file: core_test.clj
+; 
+; ; clj  parallel-logic.core-test 
+; WARNING: var? already refers to: #'clojure.core/var? in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/var?
+#'parallel-logic.core-test/var?-test
+clj꞉parallel-logic.core-test꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; FAIL in parallel-logic.core-test/delta-unify-commutative-test (core_test.clj:29):
+; commutativity of delta-unify
+; expected:
+(= (sut/delta-unify {} (v x) (v y)) (sut/delta-unify {} (v y) (v x)))
+
+; actual:
+(not (= #:v{x v/y} #:v{y v/x}))
+
+; FAIL in parallel-logic.core-test/unify-test (core_test.clj:34):
+; merging two deltas
+; expected:
+(= {(v x) 1} (sut/unify {} {(v x) 1} {(v x) 1}))
+
+; actual:
+(not (= #:v{x 1} {}))
+
+; FAIL in parallel-logic.core-test/unify-test (core_test.clj:36):
+; merging two deltas
+; expected:
+(=
+ {(v x) (v z), (v y) (v z)}
+ (sut/unify {(v z) 5} {(v x) (v z)} {(v y) (v z)}))
+
+; actual:
+(not (= #:v{x v/z, y v/z} #:v{x 5, y 5}))
+
+; 32 tests finished, problems found. 😭 errors: 0, failures: 3, ns: 1, vars: 7
+clj꞉parallel-logic.core-test꞉> 
+; TypeError: Cannot read properties of undefined (reading 'label')
+; Aborting connect.
+; Evaluating file: core_test.clj
+#'parallel-logic.core-test/var?-test
+clj꞉parallel-logic.core-test꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; FAIL in parallel-logic.core-test/delta-unify-basic-test (core_test.clj:10):
+; basic unification cases
+; expected:
+#:v{y v/x}
+
+; actual:
+#:v{x v/y}
+
+; diff:
+- #:v{y v/x}
+
++ #:v{x v/y}
+
+; FAIL in parallel-logic.core-test/delta-unify-commutative-test (core_test.clj:29):
+; commutativity of delta-unify
+; expected:
+#:v{x v/y}
+
+; actual:
+#:v{y v/x}
+
+; diff:
+- #:v{x v/y}
+
++ #:v{y v/x}
+
+; FAIL in parallel-logic.core-test/unify-test (core_test.clj:34):
+; merging two deltas
+; expected:
+#:v{x 1}
+
+; actual:
+{}
+
+; diff:
+- #:v{x 1}
+
++ nil
+
+; 32 tests finished, problems found. 😭 errors: 0, failures: 3, ns: 1, vars: 7
+clj꞉parallel-logic.core-test꞉> 
+; Evaluating file: core_test.clj
+#'parallel-logic.core-test/var?-test
+clj꞉parallel-logic.core-test꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; FAIL in parallel-logic.core-test/delta-unify-basic-test (core_test.clj:10):
+; basic unification cases
+; expected:
+#:v{y v/x}
+
+; actual:
+#:v{x v/y}
+
+; diff:
+- #:v{y v/x}
+
++ #:v{x v/y}
+
+; FAIL in parallel-logic.core-test/delta-unify-commutative-test (core_test.clj:29):
+; commutativity of delta-unify
+; expected:
+#:v{x v/y}
+
+; actual:
+#:v{y v/x}
+
+; diff:
+- #:v{x v/y}
+
++ #:v{y v/x}
+
+; FAIL in parallel-logic.core-test/unify-test (core_test.clj:34):
+; merging two deltas
+; expected:
+#:v{x 1}
+
+; actual:
+{}
+
+; diff:
+- #:v{x 1}
+
++ nil
+
+; 32 tests finished, problems found. 😭 errors: 0, failures: 3, ns: 1, vars: 7
+clj꞉parallel-logic.core-test꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/unify
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 32 tests finished, all passing 👍, ns: 1, vars: 7
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core_test.clj
+#'parallel-logic.core-test/var?-test
+clj꞉parallel-logic.core-test꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/unify
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 35 tests finished, all passing 👍, ns: 1, vars: 8
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/delta-unify
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; FAIL in parallel-logic.core-test/delta-unify-collections-test (core_test.clj:24):
+; collection unification
+; expected:
+nil
+
+; actual:
+{}
+
+; 35 tests finished, problems found. 😭 errors: 0, failures: 1, ns: 1, vars: 8
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/unify
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 35 tests finished, all passing 👍, ns: 1, vars: 8
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core_test.clj
+; 
+; ; clj  parallel-logic.core-test 
+; Syntax error compiling at (test/parallel_logic/core_test.clj:78:33).
+; No such var: sut/==
+; Evaluation of file core_test.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉parallel-logic.core-test꞉> 
+; Evaluating file: core.clj
+; 
+; ; clj  parallel-logic.core 
+; WARNING: == already refers to: #'clojure.core/== in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/==
+#'parallel-logic.core/==
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 35 tests finished, all passing 👍, ns: 1, vars: 8
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core.clj
+; 
+; WARNING: disj already refers to: #'clojure.core/disj in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/disj
+#'parallel-logic.core/disj
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core_test.clj
+#'parallel-logic.core-test/disj-test
+clj꞉parallel-logic.core-test꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; 52 tests finished, all passing 👍, ns: 1, vars: 11
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core/disj
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 52 tests finished, all passing 👍, ns: 1, vars: 11
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/disj
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 52 tests finished, all passing 👍, ns: 1, vars: 11
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/disj
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 52 tests finished, all passing 👍, ns: 1, vars: 11
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/disj
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 52 tests finished, all passing 👍, ns: 1, vars: 11
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/disj
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; 52 tests finished, all passing 👍, ns: 1, vars: 11
+clj꞉parallel-logic.core꞉> 
+; Syntax error compiling at (src/parallel_logic/core.clj:104:3).
+; Unable to resolve symbol: goal in this context
+clj꞉parallel-logic.core꞉> 
+; Syntax error compiling at (src/parallel_logic/core.clj:104:4).
+; Unable to resolve symbol: goal in this context
+clj꞉parallel-logic.core꞉> 
+; WARNING: conj already refers to: #'clojure.core/conj in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/conj
+; 
+; Syntax error compiling at (src/parallel_logic/core.clj:104:4).
+; Unable to resolve symbol: goal in this context
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core_test.clj
+#'parallel-logic.core-test/conj-test
+clj꞉parallel-logic.core-test꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; nREPL Connection was closed
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Starting Jack-in: (cd /Users/ericnormand/projects/parallel-logic; clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.3.1"},cider/cider-nrepl {:mvn/version,"0.55.4"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]")
+; Using host:port localhost:58866 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Evaluating file: core_test.clj
+; 
+; ; clj  parallel-logic.core-test 
+; WARNING: var? already refers to: #'clojure.core/var? in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/var?
+; 
+; WARNING: == already refers to: #'clojure.core/== in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/==
+; 
+; WARNING: disj already refers to: #'clojure.core/disj in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/disj
+; 
+; WARNING: conj already refers to: #'clojure.core/conj in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/conj
+#'parallel-logic.core-test/conj-test
+clj꞉parallel-logic.core-test꞉> 
+; Running test: disj-test…
+; 8 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+nil
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core_test.clj
+#'parallel-logic.core-test/conj-test
+clj꞉parallel-logic.core-test꞉> 
+; Evaluating file: core.clj
+; 
+; ; clj  parallel-logic.core 
+; Syntax error (UnsupportedOperationException) compiling recur at (src/parallel_logic/core.clj:125:25).
+; Can only recur from tail position
+; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; nREPL Connection was closed
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Starting Jack-in: (cd /Users/ericnormand/projects/parallel-logic; clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.3.1"},cider/cider-nrepl {:mvn/version,"0.55.4"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]")
+; Using host:port localhost:62230 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Evaluating file: core_test.clj
+; 
+; ; clj  parallel-logic.core-test 
+; WARNING: var? already refers to: #'clojure.core/var? in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/var?
+; 
+; WARNING: == already refers to: #'clojure.core/== in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/==
+; 
+; WARNING: disj already refers to: #'clojure.core/disj in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/disj
+; 
+; WARNING: conj already refers to: #'clojure.core/conj in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/conj
+#'parallel-logic.core-test/conj-test
+clj꞉parallel-logic.core-test꞉> 
+true
+clj꞉parallel-logic.core-test꞉> 
+true
+clj꞉parallel-logic.core-test꞉> 
+true
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core-test/conj-test
+clj꞉parallel-logic.core-test꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Starting Jack-in: (cd /Users/ericnormand/projects/parallel-logic; clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.3.1"},cider/cider-nrepl {:mvn/version,"0.55.4"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]")
+; Using host:port localhost:62803 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Evaluating file: core_test.clj
+; 
+; ; clj  parallel-logic.core-test 
+; WARNING: var? already refers to: #'clojure.core/var? in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/var?
+; 
+; WARNING: == already refers to: #'clojure.core/== in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/==
+; 
+; WARNING: disj already refers to: #'clojure.core/disj in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/disj
+; 
+; WARNING: conj already refers to: #'clojure.core/conj in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/conj
+#'parallel-logic.core-test/conj-test
+clj꞉parallel-logic.core-test꞉> 
+#object[clojure.core.async.impl.channels.ManyToManyChannel 0x4edce569 "clojure.core.async.impl.channels.ManyToManyChannel@4edce569"]
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core-test/channel->set
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: nil
+false
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: nil
+nil
+clj꞉parallel-logic.core-test꞉> 
+; Running test: disj-test…
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 1}
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: #:v{x 1}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 3}
+; Channel value: #:v{x 2}
+; Channel value: #:v{x 1}
+; Channel value: nil
+; 8 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: nil
+nil
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: nil
+false
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: nil
+nil
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x41694b8b "clojure.core.async.impl.channels.ManyToManyChannel@41694b8b"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x41694b8b "clojure.core.async.impl.channels.ManyToManyChannel@41694b8b"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x41694b8b "clojure.core.async.impl.channels.ManyToManyChannel@41694b8b"]]
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x41694b8b "clojure.core.async.impl.channels.ManyToManyChannel@41694b8b"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x41694b8b "clojure.core.async.impl.channels.ManyToManyChannel@41694b8b"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"], :acc #function[parallel-logic.core/conj/fn--19073]}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x41694b8b "clojure.core.async.impl.channels.ManyToManyChannel@41694b8b"]]
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x41694b8b "clojure.core.async.impl.channels.ManyToManyChannel@41694b8b"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x41694b8b "clojure.core.async.impl.channels.ManyToManyChannel@41694b8b"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"], :acc #function[parallel-logic.core/conj/fn--19073]}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x2899ac8f "clojure.core.async.impl.channels.ManyToManyChannel@2899ac8f"]]
+; Channel value: nil
+nil
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/conj
+clj꞉parallel-logic.core꞉> 
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d26ad5a "clojure.core.async.impl.channels.ManyToManyChannel@1d26ad5a"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d26ad5a "clojure.core.async.impl.channels.ManyToManyChannel@1d26ad5a"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d26ad5a "clojure.core.async.impl.channels.ManyToManyChannel@1d26ad5a"]]
+; Got: {v/y 2}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d26ad5a "clojure.core.async.impl.channels.ManyToManyChannel@1d26ad5a"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d26ad5a "clojure.core.async.impl.channels.ManyToManyChannel@1d26ad5a"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"], :acc #function[parallel-logic.core/conj/fn--19160]}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d26ad5a "clojure.core.async.impl.channels.ManyToManyChannel@1d26ad5a"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d26ad5a "clojure.core.async.impl.channels.ManyToManyChannel@1d26ad5a"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d26ad5a "clojure.core.async.impl.channels.ManyToManyChannel@1d26ad5a"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"], :acc #function[parallel-logic.core/conj/fn--19160]}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x13e14156 "clojure.core.async.impl.channels.ManyToManyChannel@13e14156"]]
+; Got: {v/x 1}
+; Channel value: nil
+nil
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core/conjoin
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/disjoin
+clj꞉parallel-logic.core꞉> 
+#'parallel-logic.core/conjoin
+clj꞉parallel-logic.core꞉> 
+; nREPL Connection was closed
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Starting Jack-in: (cd /Users/ericnormand/projects/parallel-logic; clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.3.1"},cider/cider-nrepl {:mvn/version,"0.55.4"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]")
+; Using host:port localhost:63629 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Evaluating file: core_test.clj
+; 
+; ; clj  parallel-logic.core-test 
+; WARNING: var? already refers to: #'clojure.core/var? in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/var?
+; 
+; WARNING: == already refers to: #'clojure.core/== in namespace: parallel-logic.core, being replaced by: #'parallel-logic.core/==
+#'parallel-logic.core-test/conj-test
+clj꞉parallel-logic.core-test꞉> 
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"]]
+; Got: {v/y 2}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"]]
+; Got: {v/x 1}
+; "delta" nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4c42ff90 "clojure.core.async.impl.channels.ManyToManyChannel@4c42ff90"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x76e733fb "clojure.core.async.impl.channels.ManyToManyChannel@76e733fb"], :acc #{{v/y 2}}}}
+; []
+; Channel value: nil
+nil
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core/conjoin
+clj꞉parallel-logic.core꞉> 
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"]]
+; Got: {v/x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"]]
+; Got: {v/y 2}
+; "delta" {v/y 2, v/x 1}
+; Channel value: #:v{y 2, x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4344ab5c "clojure.core.async.impl.channels.ManyToManyChannel@4344ab5c"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x64635f0 "clojure.core.async.impl.channels.ManyToManyChannel@64635f0"], :acc #{{v/y 2}}}}
+; []
+; Channel value: nil
+#{#:v{y 2, x 1}}
+clj꞉parallel-logic.core-test꞉> 
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"]]
+; Got: {v/x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"]]
+; Got: {v/y 2}
+; "delta" {v/y 2, v/x 1}
+; Channel value: #:v{y 2, x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x236b5413 "clojure.core.async.impl.channels.ManyToManyChannel@236b5413"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x459319b6 "clojure.core.async.impl.channels.ManyToManyChannel@459319b6"], :acc #{{v/y 2}}}}
+; []
+; Channel value: nil
+true
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core-test/conj-test
+clj꞉parallel-logic.core-test꞉> 
+; Running test: conj-test…
+; Channel value: {}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"]]
+; Got: {v/y 2}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"]]
+; Got: {v/x 1}
+; "delta" {v/y 2, v/x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "cloChannel value:ju re.core.async.impl.channels.ManyToManyChannel@1b1c6863"]#:v{ {:open?y  true, 2, :other x#object[ clojure.core.async.impl.channels.ManyToManyChannel 1}0x394f0b1 "
+; clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x394f0b1 "clojure.core.async.impl.channels.ManyToManyChannel@394f0b1"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1b1c6863 "clojure.core.async.impl.channels.ManyToManyChannel@1b1c6863"], :acc #{{v/y 2}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"]]
+; Got: {v/x 5}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"], :acc #{{v/x 5}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"], :acc #{{v/x 5}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"]]
+; Got: {v/x 5}
+; "delta" {v/x 5}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.iChannel value:mp l.channels.ManyToManyChannel@5e9717dc"] {#:v{:open? true, :other x#object[ clojure.core.async.impl.channels.ManyToManyChannel 50x27250bd1 }"cloj
+; ure.core.async.impl.channels.ManyToManyChannel@27250bd1"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"], :acc #{{v/x 5}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x27250bd1 "clojure.core.async.impl.channels.ManyToManyChannel@27250bd1"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5e9717dc "clojure.core.async.impl.channels.ManyToManyChannel@5e9717dc"], :acc #{{v/x 5}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"]]
+; Got: {v/x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"]]
+; Got: {v/x 2}
+; "delta" nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f4e8e7f "clojure.core.async.impl.channels.ManyToManyChannel@5f4e8e7f"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x51896a3e "clojure.core.async.impl.channels.ManyToManyChannel@51896a3e"], :acc #{{v/x 2}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"]]
+; Got: {v/x 2}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1e738444 "clojure.core.async.impl.channels.ManyToManyChannel@1e738444"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5b71014e "clojure.core.async.impl.channels.ManyToManyChannel@5b71014e"], :acc #{{v/x 2}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"]]
+; 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"], :acc #{}}}
+; Got: {v/y 2}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel [0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"]]
+; #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"]]
+; Got: {v/z Got:3 }{
+; v/x {1#object[}clojure.core.async.impl.channels.ManyToManyChannel 
+; 0x431c52e "clojure.core.async.impl.channels.Many"TdoeMlatnay"C hanne{l@43v/y1 c25, 2v/xe "1]} 
+; {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"], :acc #{{v/z 3}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"], :acc #{{v/z 3}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"]]
+; Got: {v/y 2, v/x 1}
+; {#object["clojure.core.async.impl.channels.ManyToManyChanneldelta"  {v/y 0x5f023026 2", cv/xl o1j, uv/zr e3.}c
+; ore.async.impl.cha{n#object[nclojure.core.async.impl.channels.ManyToManyChannel eChannel value:l 0x431c52e s".cMla#:v{onjyuTryo 2, ex 1, Mz 3.}
+; acore.ansyyCnhca.ninmepll@.5cfh0a2n3n0e2l6s".]M anyToMa{nyC:open?h atruen, n:othere l@43#object[1clojure.core.async.impl.channels.ManyToManyChannelc 52e"]0x7b37420f  "clojur{e.:open?c otruer, e:other. asy#object[nclojure.core.async.impl.channels.ManyToManyChannelc .impl.c0x2f279ea1 h"acnlnoejlusr.eM.acnoyrTeo.MaasnyynCch.ainmnpell.@c7hba3n7n4e2l0sf."M]a, ny:accT oMa#{nyChan{nev/xl @12}f}2}7, 9ea#object[clojure.core.async.impl.channels.ManyToManyChannel 10x7b37420f ""]c, lo:accj ure#{.core.{asv/yy n2c, .v/xi m1p}l}.}c, hann#object[eclojure.core.async.impl.channels.ManyToManyChannell s.Many0x2f279ea1 T"ocMlaonjyuCrhea.ncnoerle@.7abs3y7n4c2.0ifm"p]l .cha{n:open?n etruel, s:other. Ma#object[nclojure.core.async.impl.channels.ManyToManyChannely ToMan0x5f023026 y"Cchlaonjnuerle@.2cfo2r7e9.eaas1y"n]c .impl.{ch:open?a nfalsen, e:otherl s.#object[Mclojure.core.async.impl.channels.ManyToManyChannela nyToManyCha0x431c52e "clnonjeulr@e5.fc0o2r3e0.2a6s"y]n, c.:acci mp#{l.c{hav/yn ne2l}s}.}M}anyT
+; oMan[yCha#object[nclojure.core.async.impl.channels.ManyToManyChanneln el@431c50x5f023026 2"ec"l]o, jure:acc. core.#{async.im{plv/z. c3h}a}n}n}els.
+; Man[yToMa#object[nclojure.core.async.impl.channels.ManyToManyChannely Channel@0x431c52e 5"fc0l2o3j0u2r6e".]c ore.#object[aclojure.core.async.impl.channels.ManyToManyChannels ync.imp0x7b37420f l".cclhoajnunreel.sc.oMraen.yaTsoyMnacn.yiCmhpaln.ncehla@n4n3e1lcs5.2Mea"n]y]To
+; ManyChannel@7b37420f"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7b37420f "clojure.core.async.impl.channels.ManyToManyChannel@7b37420f"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x5f023026 "clojure.core.async.impl.channels.ManyToManyChannel@5f023026"], :acc #{{v/y 2}}}}
+; []
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"], :acc #{{v/y 2, v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2f279ea1 "clojure.core.async.impl.channels.ManyToManyChannel@2f279ea1"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x431c52e "clojure.core.async.impl.channels.ManyToManyChannel@431c52e"], :acc #{{v/z 3}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d788342 "clojure.core.async.impl.channels.ManyToManyChannel@1d788342"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x128c68bf "clojure.core.async.impl.channels.ManyToManyChannel@128c68bf"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x128c68bf "clojure.core.async.impl{.chann#object[eclojure.core.async.impl.channels.ManyToManyChannell s.ManyTo0x6634bfdd M"acnlyoCjhuarnen.eclo@r1e2.8acsync.impl6.8cbhfa"n]n els.Ma{ny:open?T otrueM, a:othern yC#object[hclojure.core.async.impl.channels.ManyToManyChannela nnel@0x1d788342 6"6c3l4objfudrde".]c ore.as{yn:open?c .truei, m:otherp l.#object[cclojure.core.async.impl.channels.ManyToManyChannelh annels0x68f34d6b ."McalnoyjTuorMea.ncyoCrhea.nanseyln@c1.di7m8p8l3.4c2h"a]n, n:acce ls#{.}M}a}nyTo
+; ManyC[hann#object[eclojure.core.async.impl.channels.ManyToManyChannell @68f34d0x1d788342 6"bc"l]o, ju:accr e.c#{o}r}e, .asy#object[nclojure.core.async.impl.channels.ManyToManyChannelc .impl.0x68f34d6b c"hcalnonjeulrse..McaonryeT.oaMsaynnycC.hiamnpnle.lc@h1adn7n8e8l3s4.2M"a]n yTo#object[Mclojure.core.async.impl.channels.ManyToManyChannela nyCh0x128c68bf a"ncnleolj@u6r8ef.3c4odr6eb."a]s ync.i{m:open?p ltrue., c:otherh an#object[nclojure.core.async.impl.channels.ManyToManyChannele ls.ManyToManyChannel@128c68bf"]]
+; Got: {v/x 5}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d788342 "clojure.core.async.impl.channels.ManyToManyChannel@1d788342"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x128c68bf "clojure.core.async.impl.channels.ManyToManyChannel@128c68bf"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x128c68bf "clojure.core.async.impl.channels.ManyToManyChannel@128c68bf"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d788342 "clojure.core.async.impl.channels.M0x6634bfdd an"ycTlooMjaunrye.core.async.impl.channels.ManyToManyChannel@6634bfdd"C]h, an:accn el@#{1}d}7}88342"
+; ], :acc [#{#object[clojure.core.async.impl.channels.ManyToManyChannel{ v/x 50x6634bfdd }"}c}l}oju
+; re.core[.asy#object[nclojure.core.async.impl.channels.ManyToManyChannelc .impl.0x1d788342 c"hcalnonjeure.core.async.impl.channels.ManyToManyChannel@1d788342"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x128c68bf l"sc.lMoajnuyrTeo.McaonryeC.hananseyln@c6.6i3m4pblf.dcdh"a]n nels.Ma#object[nclojure.core.async.impl.channels.ManyToManyChannely ToManyCh0x68f34d6b a"ncnleolj@u1r2e8.cc6ore.async.impl.channel8sb.fM"a]n]yTo
+; ManyChannel@68f34d6b"]]
+; Got: nil
+; Got:{ #object[clojure.core.async.impl.channels.ManyToManyChannel {0x1d788342 v/x" c5l}o
+; jure.core.asy{nc.i#object[mclojure.core.async.impl.channels.ManyToManyChannelp l.cha0x6634bfdd n"ncellosj.uMraen.ycToorMea.naysCyhnacn.niemlp@l1.dc7h8a8n3n4e2l"s]. ManyToM{an:open?y Ctrueh, a:othern nel#object[@clojure.core.async.impl.channels.ManyToManyChannel6 634bfdd0x128c68bf ""c]l ojure{.:open?c otruer, e:other. as#object[yclojure.core.async.impl.channels.ManyToManyChanneln c.im0x68f34d6b p"lc.lcohjaunrnee.lcso.rMea.naysTyonMca.niymCphla.ncnhealn@n1e2l8sc.6M8abnfy"T]o, M:acca nyC#{h}a}n, nel@#object[6clojure.core.async.impl.channels.ManyToManyChannel 8f34d6b"], 0x128c68bf :acc" clo#{jure.{cov/xr e5.}a}s}y, nc.#object[iclojure.core.async.impl.channels.ManyToManyChannelm pl.ch0x68f34d6b a"ncnleoljsu.rMea.ncyoTroeM.aansyyCnhca.ninmepll@.1c2h8acn6n8eblfs".]M anyTo{M:open?a nfalsey, C:otherh annel@68f#object[3clojure.core.async.impl.channels.ManyToManyChannel4 d6b"]0x1d788342  "cl{o:open?j utruer, e:other. co#object[rclojure.core.async.impl.channels.ManyToManyChannele .asy0x6634bfdd n"cc.liomjpulr.ec.hcaonrnee.lasync.impl.channels.ManyTosM.aMnaynCyhTaonMnaenly@C6h6a3n4nbefld@d1"d]7, 8:acc8 34#{2}"}]}, 
+; :acc [#{#object[clojure.core.async.impl.channels.ManyToManyChannel{ v/x 5}}}}
+; 0x6634bfdd ["clojure.#object[cclojure.core.async.impl.channels.ManyToManyChannelo re.0x1d788342 a"scylnocj.uirmep.lc.ocrhea.nanseylnsc..MiamnpylT.ocMhaannynCehlasn.nMealn@y6T6o3M4abnfydCdh"a]n nel#object[@clojure.core.async.impl.channels.ManyToManyChannel1 d780x68f34d6b 8"3c4l2o"j]u]re
+; .core.async.impl.channels.ManyToManyChannel@68f34d6b"]]
+; Got: {v/x 5}
+; "delta" {v/x 5}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6634bfdd "cGot:l oju{rev/x. c5o}r
+; e.async.im"pdle.lcthaa"n nel{s.v/xM a5n}y
+; ToManyChannel@6634bfdd{"]#object[Channel value:  clojure.core.async.impl.channels.ManyToManyChannel {0x1d788342 :open?" #:v{ctruex l5}
+; ojure, .:otherc or#object[eclojure.core.async.impl.channels.ManyToManyChannel. asy0x68f34d6b n"cc.liomjpulr.ec.hcaonrnee.lass.yMnac.impl.channels.ManyToManyChannel@68f34d6b"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x68f34d6b "clojure.core.async.impl.channels.ManyToManyChannel@68f34d6b"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6634bfdd n"ycTlooMjaunryeC.hcaonrnee.la@s1ydn7c8.8i3m4p2l".]c han{n:open?e ltrues, .:otherM a#object[nclojure.core.async.impl.channels.ManyToManyChannely ToM0x128c68bf a"ncylCohjaunrnee.lc@o6r6e3.4absfydndc".]i, m:accp l.#{ch{av/xn n5e}l}s}.}Ma
+; nyToM[an#object[yclojure.core.async.impl.channels.ManyToManyChannelC han0x6634bfdd n"ecll@o1j2u8rce6.8cbofr"e]., a:accs yn#{c.i{mpv/xl .5c}h}a}n, ne#object[lclojure.core.async.impl.channels.ManyToManyChannels .Ma0x128c68bf n"ycTlooMjaunre.ycCohraenn.eals@y6n6c3.4ibmfpdld."c]h anne#object[lclojure.core.async.impl.channels.ManyToManyChannels .Many0x68f34d6b T"ocMlaonjyuCrhea.ncnoerle@.1a2s8ycn6c8.bifm"p]l .cha{n:open?n efalsel, s:other. M#object[aclojure.core.async.impl.channels.ManyToManyChanneln yTo0x1d788342 "McalnoyjCuhraen.nceolr@e6.8afs3y4ndc6.bi"m]p]l.c
+; hannels.ManyToManyChannel@1d788342"], :acc #{{v/x 5}}}}
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6634bfdd "clojure.core.async.impl.channels.ManyToManyChannel@6634bfdd"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x68f34d6b "clojure.core.async.impl.channels.ManyToManyChannel@68f34d6b"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x68f34d6b "clojure.core.async.impl.channels.ManyToManyChannel@68f34d6b"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6634bfdd "clojure.core.async.impl.channels.ManyToManyChannel@6634bfdd"], :acc #{{v/x 5}}}}
+; [[#object[#object[clojure.core.async.impl.channels.ManyToManyChannelclojure.core.async.impl.channels.ManyToManyChannel  0x1d788342 0x6634bfdd ""cclloojjuurree..ccoorree..aassyynncc..iimmppll..cchhaannnneellss..MMaannyyTTooMMaannyyCChhaannnneell@@16d673848b3f4d2d""]]]]
+; 
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6634bfdd "clojure.core.async.impl.channels.ManyToManyChannel@6634bfdd"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x68f34d6b "clojure.core.async.impl.channels.ManyToManyChannel@68f34d6b"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x68f34d6b "clojure.core.async.impl.channels.ManyToManyChannel@68f34d6b"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6634bfdd "clojure.core.async.impl.channels.ManyToManyChannel@6634bfdd"], :acc #{{v/x 5}}}}
+; []
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d788342 "clojure.core.async.impl.channels.ManyToManyChannel@1d788342"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x128c68bf "clojure.core.async.impl.channels.ManyToManyChannel@128c68bf"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x128c68bf "clojure.core.async.impl.channels.ManyToManyChannel@128c68bf"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x1d788342 "clojure.core.async.impl.channels.ManyToManyChannel@1d788342"], :acc #{{v/x 5}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6cccd4ad "clojure.core.async.impl.channels.ManyToManyChannel@6cccd4ad"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x29ce4750 "clojure.core.async.impl.c{hann#object[eclojure.core.async.impl.channels.ManyToManyChannell s.0xc2493ec "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2e36c18 "clojure.core.async.impl.channels.ManyToManyChannel@2e36c18"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2e36c18 "clojure.core.async.impl.channels.ManyToManyChannel@2e36c18"] M{a:open? ntruey, T:other o#object[Mclojure.core.async.impl.channels.ManyToManyChannel a0xc2493ec n"ycClhoajnunreel.@core.async.impl.ch2a9ncnee4l7s5.0M"a]n, yTo:accM anyC#{h}a}n, nel@c#object[2clojure.core.async.impl.channels.ManyToManyChannel4 93ec"]0x29ce4750 , ":acc c#{l}o}j}ure.cor
+; e.[a#object[sclojure.core.async.impl.channels.ManyToManyChannel y0xc2493ec n"cc.liomjpulr.ec.hcaonrnee.lass.yMnacn.yiTmopMla.ncyhCahnannenlesl.@M2a9ncyeT4o7M5a0"n]yChannel@c2493ec" ] #object[clojure.core.async.impl.channels.ManyToManyChannel{ :open?0x2e36c18  "clojure.core.async.impl.channels.ManyToManyChannel@2e36c18"]]true
+; , :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6cccd4ad "clojure.core.async.Got:i m{pv/x l2.}c
+; hannels{.#object[Mclojure.core.async.impl.channels.ManyToManyChannel a0xc2493ec n"ycTlooMjaunryeC.hcaonrnee.la@s6ycnccc.di4mapd"l].channels.ManyToManyChannel@c2493ec", ] :acc{ :open? true, #{:other }#object[}clojure.core.async.impl.channels.ManyToManyChannel} 
+; 0x2e36c18 "clojure.[core#object[.clojure.core.async.impl.channels.ManyToManyChannela sync.0x6cccd4ad i"mcpllo.jcuhraen.nceolrse..MaasnyynTco.MiamnpylC.hcahnannenle@l2se.3M6acn1y8T"o]M, an:accy Cha#{n}n}e, l@6#object[cclojure.core.async.impl.channels.ManyToManyChannelc cd4a0x2e36c18 d""c]l oj#object[uclojure.core.async.impl.channels.ManyToManyChannelr e.c0x29ce4750 o"rcel.oajsuyrnec..ciomrpel..acshyanncn.eilmsp.lM.acnhyaTnonMealnsy.CMhaannynTeolM@a2ney3C6hca1n8n"e]l @29{c:open?e 4true7, 5:other0 "#object[]clojure.core.async.impl.channels.ManyToManyChannel ]0xc2493ec 
+; "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"], :acc #{{Got:v/x  2{}v/x} }3}}
+; 
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0xc2493ec {"c#object[lclojure.core.async.impl.channels.ManyToManyChannelo j0x6cccd4ad u"rcel.ocjourree..acsoyrnec..aismypnlc..cihmapnln.eclhsa.nMnaenlysT.oMMaannyyTCohMaannnyeClh@acn2n4e9l3@e6cc"c]c d4ad#object["clojure.core.async.impl.channels.ManyToManyChannel]  0x2e36c18 {"c:open?l otruej, u:otherr e.#object[cclojure.core.async.impl.channels.ManyToManyChannelo re.as0x29ce4750 y"nccl.oijmuprle..cchoarnen.ealssy.nMca.niymTpolM.acnhyaCnhnaenlnse.lM@2e36acn1y8T"o]M]anyC
+; hannel@29ce4750"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x29ce4750 "clojure.core.async.impl.channels.MaGot:n yToMan{yChav/xn n1e}l@
+; 29ce4750"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel" delt0x6cccd4ad a"" clonilj
+; ure.core.async.{impl.#object[cclojure.core.async.impl.channels.ManyToManyChannelh annels0xc2493ec ."McalnoyjTuorMea.ncyoCrhea.nanseyln@c6.cicmcpdl4.acdh"a]n, ne:accl s.M#{anyToM{anyv/xC h3a}n}n}e}l@c
+; 2493ec"][ #object[{clojure.core.async.impl.channels.ManyToManyChannel:open?  true0x6cccd4ad , ":other cl#object[oclojure.core.async.impl.channels.ManyToManyChannelj ure.c0x2e36c18 o"rcel.oajsuyrnec..ciomrpel..acshyanncn.eilmsp.lM.acnhyaTnonMealnsy.CMhaannynTeolM@a6ncycCchda4nande"l]@ 2e3#object[6clojure.core.async.impl.channels.ManyToManyChannelc 18"]0x29ce4750 , ":accc loj#{ure.co{re.v/xa s1y}n}c}., impl#object[.clojure.core.async.impl.channels.ManyToManyChannelc hanne0x2e36c18 l"sc.lMoajnuyrTeo.McaonryeC.hasynca.ninmepll@.2c9hcaen4n7e5l0s".]M]any
+; TGot: nil
+; oManyC{#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6cccd4ad "clojure.core.async.impl.channels.ManyTohManyChannel@6cccd4ad"] a{nnel@2e36c18":open?]  true{, :open? :othertrue , #object[clojure.core.async.impl.channels.ManyToManyChannel 0x29ce4750 "clojure.core.async.impl.channels.ManyToManyChannel@29ce4750"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x29ce4750 "clojure.core.async.impl.channels.ManyToManyChannel@29ce4750"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6cccd4ad "clojure.core.async.impl.channels.ManyToManyChannel@6cccd4ad"], :acc #{{v/x 3}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6cccd4ad "clojure.core.async.impl.channels.ManyToManyChannel@6cccd4ad"]]
+; :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xc2493ec "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0xc2493ec "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2e36c18 "clojure.core.async.impl.channels.ManyToManyChannel@2e36c18"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0xc2493ec "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2e36c18 "clojure.core.async.impl.channels.ManyToManyChannel@2e36c18"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2e36c18 "clojure.core.async.impl.channels.ManyToManyChannel@2e36c18"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xc2493ec "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0xc2493ec "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0xc2493ec "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2e36c18 "clojure.core.async.impl.channels.ManyToManyChannel@2e36c18"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2e36c18 "clojure.core.async.impl.channels.ManyToManyChannel@2e36c18"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xc2493ec "clojure.core.async.impl.channels.ManyToManyChannel@c2493ec"], :acc #{{v/x 2}}}}
+; []
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6cccd4ad "clojure.core.async.impl.channels.ManyToManyChannel@6cccd4ad"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x29ce4750 "clojure.core.async.impl.channels.ManyToManyChannel@29ce4750"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x29ce4750 "clojure.core.async.impl.channels.ManyToManyChannel@29ce4750"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6cccd4ad "clojure.core.async.impl.channels.ManyToManyChannel@6cccd4ad"], :acc #{{v/x 3}}}}
+; []
+; Channel value: nil
+; 10 tests finished, all passing 👍, ns: 1, vars: 1
+clj꞉parallel-logic.core-test꞉> 
+#'parallel-logic.core/conjoin
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; Channel value: {}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"]]
+; Got: {v/x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"]]
+; Got: {v/y 2}
+; "delta" {v/y 2, v/x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channeChannel value:ls .ManyToManyChannel@268749a5"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channel#:v{s.ManyToManyChannye l@28402a, 30x 5"1]}, :acc
+;  #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x2840a305 "clojure.core.async.impl.channels.ManyToManyChannel@2840a305"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x268749a5 "clojure.core.async.impl.channels.ManyToManyChannel@268749a5"], :acc #{{v/y 2}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"]]
+; Got: {v/x 5}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"]]
+; Got: {v/x 5}
+; "delta" {v/x 5}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.chChannel value:a nnels.ManyToManyChannel@697da93e"] {:open? #:v{falsex,  5}:other 
+; #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"], :acc #{{v/x 5}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x752b0fd5 "clojure.core.async.impl.channels.ManyToManyChannel@752b0fd5"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x697da93e "clojure.core.async.impl.channels.ManyToManyChannel@697da93e"], :acc #{{v/x 5}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"]]
+; Got: {v/x 2}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"]]
+; Got: {v/x 1}
+; "delta" nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xde23aaa "clojure.core.async.impl.channels.ManyToManyChannel@de23aaa"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x585ec2fe "clojure.core.async.impl.channels.ManyToManyChannel@585ec2fe"], :acc #{{v/x 2}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"]]
+; Got: {v/x 2}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x24aab529 "clojure.core.async.impl.channels.ManyToManyChannel@24aab529"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x9525671 "clojure.core.async.impl.channels.ManyToManyChannel@9525671"], :acc #{{v/x 2}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0xacdca70 "clojure.core.async.impl.channels.ManyToManyChannel@acdca70"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.async.impl.channels.ManyToManyChannel@16e696e9"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.async.impl.channels.ManyToManyChannel@16e696e9"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xacdca70 "clojure.core.async.impl.channels.ManyToManyChannel@acdca70"], {:acc #{}}}#object[
+; clojure.core.async.impl.channels.ManyToManyChannel [#object[0x552bd clojure.core.async.impl.channels.ManyToManyChannel "0xacdca70 c"lcoljoujruer.ec.ocroer.ea.saysnycn.ci.mipmlp.lc.hcahnannenlesl.sM.aMnaynTyoTMoaMnaynCyhCahnannenle@l5@5a2cbddc"a70"]]  #object[clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.async.impl.channels.ManyToManyChannel@16e696e9"]]
+; Got: {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyTo{ManyChannel@ec2av/z ccd"], :acc #{}}3, }#object[
+; clojure.core.async.impl.channels.ManyToManyChannel {0xec2accd #object["clojure.core.async.impl.channels.ManyToManyChannel c0xacdca70 l"ocjluorjeu.rceo.rceo.raes.yanscy.nicm.pilm.pclh.acnhnaenlnse.lMsa.nMyaTnoyMTaonMyaCnhyaCnhnaenln@eelc@2aaccdccda"70"] ]{ :open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel {0x16e696e9 "clo:open? jure.core.async.impl.channels.ManyToManyChantruenel@16e696e9"], , :acc :other#{} }, #object[#object[clojure.core.async.impl.channels.ManyToManyChannel clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.async.impl.channels0x552bd ."McalnoyjTuorMea.ncyoCrhea.nanseyln@c1.6iem6p9l6.ec9"h] a{n:open? ntrue, e:other l#object[sclojure.core.async.impl.channels.ManyToManyChannel .0xacdca70 M"acnlyoTjouMraen.ycCohraen.naesly@n5c5.2ibmdp"l.channels.ManyToManyChannel@acdca70"]], , :acc :acc #{{v/z #{3}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel }0xacdca70 }"}clojure.core.
+; as[#object[clojure.core.async.impl.channels.ManyToManyChannel y0x552bd n"cc.liomjpulr.ec.hcaonrnee.lass.yMnacn.yiTmopMla.ncyhCahnannenlesl.@MaacndycTao7M0a"nyChannel@552bd"] #object[]clojure.core.async.impl.channels.ManyToManyChannel  0xec2accd "clojure.co#object[reclojure.core.async.impl.channels.ManyToManyChannel .async.impl.channels0x16e696e9 ."McalnoyjTuorMea.ncyoCrhea.nanseyln@ce.ci2mapclc.d"c]]h
+; annels.ManyToManyChannel@16e696e9"]]
+; Got: {v/x 1}
+; Got: nil
+; {{#object[clojure.core.async.impl.channels.ManyToManyChannel 0xacdca70 "clojure.core.async.impl.channels.ManyToManyChannel@acdca70"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.async.impl.channels.ManyToManyChannel@16e696e9"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.async.impl.channels.ManyToManyChannel@16e696e9"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xacdca70 "clojure.core.async.impl.channels.ManyToManyChannel@acdca70"], :acc #object[#{clojure.core.async.impl.channels.ManyToManyChannel{ v/z 3}}}}
+; 0x552bd [#object["clojure.core.async.impl.channels.ManyToManyChannel c0xacdca70 l"ocjluorjeu.rceo.rceo.raes.yanscy.nicm.pilm.pclh.acnhnaenlnse.lMsa.nMyaTnoyMTaonMyaCnhyaCnhnaenln@e5l5@2abcdd"ca70"]]
+; ] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyToManyChannel@ec2accd"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyToManyChannel@ec2accd"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x552bd "clojure.core.async.impl.channels.ManyToManyChannel@552bd"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x552bd "clojure.core.async.impl.channels.ManyToManyChannel@552bd"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyToManyChannel@ec2accd"]]
+; Got: {v/y 2}
+; "delta" {v/y 2, v/x 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x552bd "clojure.core.async.impl.channels.ManyToManyChannel@552bd"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyToManyChannel@ec2accd"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyToManyChannel@ec2accd"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x552bd "clojure.core.async.impl.channelGot:s .ManyToManyChannel@552b{d"], v/y:acc  #{2{, v/y v/x2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel  0x552bd 1"}cl
+; oju"rdee.lctoa"r e{.v/y a2, sv/x y1, nv/z c3}.
+; impl.channels.ManyToManyCh{a#object[nclojure.core.async.impl.channels.ManyToManyChannel n0xacdca70 e"Channel value: lc@l5o5j2ubrde".core.async.impl.channels.ManyToMan]yChannel@acdca70"] {:open? true,  :other #object[#object[clojure.core.async.impl.channels.ManyToManyChannel clojure.core.async.impl.channels.ManyToManyChannel0x16e696e9  "clojure.core.async.impl.channels.ManyToManyChannel@16e696e9"]0xec2accd , ":acc c#{l{ov/y j2, uv/x r1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.a#:v{y 2, x 1, z 3}
+; sync.impl.chea.ncnoerles..aMsaynnycT.oiMmapnly.Cchhaannnneell@s1.6Mea6n9y6Teo9M"a]n yChannel{@ec:open? 2afalsec, c:other d"]#object[]clojure.core.async.impl.channels.ManyToManyChannel 
+; 0xacdca70 "clojure.core.async.impl.channels.ManyToManyChannel@acdca70"], :acc Got: #{nil
+; {v/z{ 3#object[}clojure.core.async.impl.channels.ManyToManyChannel} }}0x552bd 
+; "clojure.core.asy[nc.i#object[mclojure.core.async.impl.channels.ManyToManyChannelp l.ch0xacdca70 a"ncnleoljsu.rMea.ncyoTroeM.aansyyCnhca.ninmepll@.5c5h2abndn"e]l s.ManyT{oMa:open? nytrueC, h:other an#object[nclojure.core.async.impl.channels.ManyToManyChannele l@acd0xec2accd c"ac7l0o"j]u]re.
+; core.async.impl.channels.ManyToManyChannel@ec2accd"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyToManyChannel@ec2accd"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x552bd "clojure.core.async.impl.channels.ManyToManyChannel@552bd"], :acc #{{v/y 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x552bd "clojure.core.async.impl.channels.ManyToManyChannel@552bd"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x552bd "clojure.core.async.impl.channels.ManyToManyChannel@552bd"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyToManyChannel@ec2accd"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0xec2accd "clojure.core.async.impl.channels.ManyToManyChannel@ec2accd"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x552bd "clojure.core.async.impl.channels.ManyToManyChannel@552bd"], :acc #{{v/y 2}}}}
+; []
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0xacdca70 "clojure.core.async.impl.channels.ManyToManyChannel@acdca70"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.async.impl.channels.ManyToManyChannel@16e696e9"], :acc #{{v/y 2, v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x16e696e9 "clojure.core.async.impl.channels.ManyToManyChannel@16e696e9"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xacdca70 "clojure.core.async.impl.channels.ManyToManyChannel@acdca70"], :acc #{{v/z 3}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0xafd39cd "clojure.core.async.impl.channels.ManyToManyChannel@afd39cd"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4fffa6f6 "clojure.core.async.impl.channels.ManyToManyChannel@4fffa6f6"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4fffa6f6 "clojure.core.async.impl.channels.ManyToManyChannel@4fffa6f6"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xafd39cd "clojure.core.async.impl.channels.ManyToManyChannel@afd39cd"], :acc #{}}}
+; [#object[{clojure.core.async.impl.channels.ManyToManyChannel 0xafd39cd "cloj#object[ure.core.async.impl.channels.ManyToManyChanneclojure.core.async.impl.channels.ManyToManyChannel l@afd39cd"] 0xd1cab9a #object["clojure.core.async.impl.channels.ManyToManyChannel cl0x4fffa6f6 o"jculroej.ucroer.ec.oarsey.nacs.yinmcp.li.mcphla.ncnhealnsn.eMlasn.yMTaonMyaTnoyMCahnaynCnhealn@nde1lc@a4bf9fa"f] a6f6"]]
+; {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed "clojure.core.async.impl.channels.ManyToManyCGot:h an{nv/x e5}l
+; @{7#object[cclojure.core.async.impl.channels.ManyToManyChannel 60xafd39cd e"5c4leodj"u]re.core.async.impl.channels.ManyToManyChannel@afd39cd"] {:open? true, , :other #object[:accclojure.core.async.impl.channels.ManyToManyChannel  0x4fffa6f6 "clojure.core.asyn#{}c.impl.channels.ManyToManyChannel@4fffa6f6"}], , :acc #object[#{}}, clojure.core.async.impl.channels.ManyToManyChannel#object[ clojure.core.async.impl.channels.ManyToManyChannel 0x4fffa6f6 "clo0x7c6e54ed j"ucrleo.jcuorree..caosryen.ca.siymnpcl..icmhpal.channels.ManyToManyChannel@7c6e54ed"] n{n:open? etrue, l:other s#object[.clojure.core.async.impl.channels.ManyToManyChannel M0xd1cab9a a"ncylToojMuarney.Cchoarnen.eals@y4nfcf.fiam6pfl6".]channels.ManyToManyC hannel@d1cab9a"]{, :open? :acc true#{}}}, 
+; :other [#object[clojure.core.async.impl.channels.ManyToManyChannel #object[0xd1cab9a clojure.core.async.impl.channels.ManyToManyChannel "clojure.core.asy0xafd39cd n"cc.liomjpulr.ec.hcaonrnee.lass.yMnacn.yiTmopMla.ncyhCahnannenlesl.@Mda1ncyaTbo9Ma"] a#object[nclojure.core.async.impl.channels.ManyToManyChannel yC0x7c6e54ed h"acnlnoejlu@raef.dc3o9rced".]async.impl.channels.ManyToManyChannel@7c6e54ed"]]
+; , :acc #{{v/x 5}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel Got: {v/x0xafd39cd  "5}
+; clojure.core.async.impl.channels.ManyToManyChan{nel@afd39#object[cclojure.core.async.impl.channels.ManyToManyChannel d"]0xd1cab9a  "c#object[lclojure.core.async.impl.channels.ManyToManyChannel ojure0x4fffa6f6 ."ccolojure.corree..aassyynncc..iimmppll..cchhaannnneellss..MMaannyyTTooMMaannyyCChhaannnneell@@4df1fcfaab69fa"6]" ]]{
+; :open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed 0xafd39cd ""cclloojjuurree..ccoorree..aassyynncc..iimmppll..cchhaannnneellss..MMaannyyTTooMMaannyyCChhaannnneell@@7acf6de3594ced"] d"{]:open? , true, :acc :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4fffa6f6 "clojure.core.async.impl.channels.ManyToManyChannel@4fffa6f6"], #{:acc #{}}, {#object[clojure.core.async.impl.channels.ManyToManyChannelv/x  50x4fffa6f6 }"}clojure.core.async.impl.channels.ManyToManyChannel@4fffa6f6"] {:open? false, :other }#object[, clojure.core.async.impl.channels.ManyToManyChannel 0xafd39cd #object["clojure.core.async.impl.channels.ManyToManyChannel clojure.core.async0x7c6e54ed ."icmlpolj.ucrhea.ncnoerles..aMsaynnycT.oiMmapnly.Cchhaannnneell@sa.fMda3n9ycTd"o], M:acc a#{n{yv/x C5}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel h0xafd39cd a"ncnleolj@u7rce6.ec5o4reed."async.impl.channels.ManyToManyChannel@afd39cd"]]]
+;  {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xd1cab9a "clojure.core.async.impl.channels.ManyToManyChannel@d1cab9a"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0xd1cab9a "clojure.core.async.impl.channels.ManyToManyChannel@d1cab9a"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed "clojure.core.async.impl.channels.ManyToManyChannel@7c6e54ed"]]
+; Got: {v/x 5}
+; "delta" {v/x 5}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0xd1cab9a "clojure.core.async.impl.channels.ManyToManyChannel@d1cab9a"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed "clojure.core.async.impl.channels.ManyToManyChannel@7c6e54ed"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed "clojure.core.async.impl.channels.ManyToManyChannel@7c6e54ed"] Got:{ :open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xd1cab9a "clojure.c{ore.async.imv/x pl.channels.ManyToManyChannel@d1cab9a"]5, }:acc 
+; #{"delta" {{v/x 5}v/x
+;  5}}}}
+; Channel value: {#:v{x 5}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0xd1cab9a "clojure.core.async.impl.channels.ManyToManyChannel@d1#object[cclojure.core.async.impl.channels.ManyToManyChannel ab9a"]0xafd39cd  "c#object[lclojure.core.async.impl.channels.ManyToManyChannel ojur0x7c6e54ed e".ccloorjeu.raes.ycnocr.ei.mapsly.ncch.ainmnpell.sc.hMaannnyeTlosM.aMnaynCyhTaonMnaenly@Cahfadn3n9ecld@"7] c6e54{ed:open? "true], ]:other #object[
+; clojure.core.async.impl.channels.ManyToManyChannel 0x4fffa6f6 "clojure.core.async.impl.channGot:e lnil
+; s{#object[clojure.core.async.impl.channels.ManyToManyChannel .0xd1cab9a M"acnlyoTjouMraen.ycCohraen.naesly@n4cf.fifmap6lf.6c"hannels.ManyToManyChannel@d1cab9a"] {:open? ]true, , :other :acc #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed "cloju#{re.core.async.{impl.channels.ManyToManyChannel@7c6e54ed"], :acc #{v/x{ v/x 55}}}}}, }#object[, clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed #object["clojure.core.async.impl.channels.ManyToManyChannel clojure.core.async.imp0x4fffa6f6 "clojure.core.async.impl.channels.ManyToManyChannel@4fffa6f6"] {:open? false, :other #object[lclojure.core.async.impl.channels.ManyToManyChannel .0xafd39cd c"hcalnonjeulrse..McaonryeT.oaMsaynnycC.hiamnpnle.lc@h7acn6nee5l4se.dM"anyToManyChannel@afd39cd"], :acc #{{]v/x  5}}}}
+; [#object[{clojure.core.async.impl.channels.ManyToManyChannel 0xafd39cd :open? "clojfalse, u:other re.core.async.impl.channels.ManyToManyChannel@afd39cd"#object[]]clojure.core.async.impl.channels.ManyToManyChannel
+;  0xd1cab9a "clojure.core.async.impl.channels.ManyToManyChannel@d1cab9a"], :acc #{{v/x 5}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0xd1cab9a "clojure.core.async.impl.channels.ManyToManyChannel@d1cab9a"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0xd1cab9a "clojure.core.async.impl.channels.ManyToManyChannel@d1cab9a"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed "clojure.core.async.impl.channels.ManyToManyChannel@7c6e54ed"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7c6e54ed "clojure.core.async.impl.channels.ManyToManyChannel@7c6e54ed"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xd1cab9a "clojure.core.async.impl.channels.ManyToManyChannel@d1cab9a"], :acc #{{v/x 5}}}}
+; []
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0xafd39cd "clojure.core.async.impl.channels.ManyToManyChannel@afd39cd"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4fffa6f6 "clojure.core.async.impl.channels.ManyToManyChannel@4fffa6f6"], :acc #{{v/x 5}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x4fffa6f6 "clojure.core.async.impl.channels.ManyToManyChannel@4fffa6f6"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0xafd39cd "clojure.core.async.impl.channels.ManyToManyChannel@afd39cd"], :acc #{{v/x 5}}}}
+; []
+; Channel value: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x18948f5a "clojure.core.async.impl.channels.ManyToManyChannel@18948f5a"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x3ae7037f "clojure.core.async.impl.channels.ManyToManyChannel@3ae7037f"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x3ae7037f "clojure.core.async.impl.channels.ManyToManyChannel@3ae7037f"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x18948f5a "clojure.core.async.impl.channels.ManyToManyChannel@18948f5a"], :acc {#{}}}
+; #object[[#object[clojure.core.async.impl.channels.ManyToManyChannelclojure.core.async.impl.channels.ManyToManyChannel  0x18948f5a "clojure.core.async.impl.channels.ManyToManyChannel@18948f5a"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e 0x3ae7037f ""cclloojjuurree..ccoorree..aassyynncc..iimmppll..cchhaannnneellss..MMaannyyTTooMMaannyyCChhaannnneell@@635a4e57905307e"f]" ]]
+; {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channeGot:l s.{Mv/x a3}n
+; yToMan{y#object[Cclojure.core.async.impl.channels.ManyToManyChannel h0x18948f5a a"ncnleolj@u7ree7.aceo9raef."async.impl.channels.M]an, yToManyChannel@18948f5a":acc ] {:open? #{true, }:other }#object[, clojure.core.async.impl.channels.ManyToManyChannel #object[0x3ae7037f clojure.core.async.impl.channels.ManyToManyChannel "clojure.core.asyn0x7e7ae9af c.impl.channels.ManyToManyChannel@3ae7037f""], c:acc l#{}}, o#object[jclojure.core.async.impl.channels.ManyToManyChannel u0x3ae7037f r"ec.lcoojruer.ea.scyonrce..iasync.impl.channels.ManyToManyChannel@3ae7037f"] {m:open? ptrue, l:other .#object[cclojure.core.async.impl.channels.ManyToManyChannel h0x18948f5a a"ncnleoljsu.rMea.ncyoTroeM.aansyyCnhca.ninmepll@.7ceh7aanen9ealfs".ManyToManyChannel@18948f] 5a"], :acc #{{{v/x 3}:open? }}true}, 
+; :other [#object[clojure.core.async.impl.channels.ManyToManyChannel #object[0x18948f5a clojure.core.async.impl.channels.ManyToManyChannel "clojure.core.async.i0x6545950e mp"lc.lcohjaunrnee.lcso.rMea.naysTyonMca.niymCphla.ncnhealn@n1e8l9s4.8Mfa5na"y] T#object[oclojure.core.async.impl.channels.ManyToManyChannel Ma0x3ae7037f n"ycClhoajnunreel.@c6o5r4e5.9a5s0ye"n]c.impl.channels.ManyToManyChannel@3ae7037f", ]]:acc 
+; #{}}}
+; Got: [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"] #object[nilclojure.core.async.impl.channels.ManyToManyChannel 
+; 0x7e7ae9af {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x18948f5a "clojure.core.async.impl.channels.ManyToManyChannel@18948f5a"] "{c:open? ltrue, o:other j#object[uclojure.core.async.impl.channels.ManyToManyChannel r0x3ae7037f e".ccloorjeu.raes.ycnocr.ei.mapsly.ncch.ainmnpell.sc.hMaannnyeTlosM.aMnaynyToManyChannel@3ae7037f"], C:acc h#{}}, a#object[nclojure.core.async.impl.channels.ManyToManyChannel n0x3ae7037f e"lc@l7oej7uaree9.acf"o]re.async.impl.channels.ManyToManyChannel@3ae7037f"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x18948f5a "clojure.core.async.impl.channels.ManyToManyChannel@18948f5a"], :acc ]#{
+; {v/x 3}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel Got:0x18948f5a  "clojure.core.async.impl.channels.ManyToManyChannel@18948f5a"]{]v/x 
+; 1}
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"], :acc #{}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"]]
+; Got: {v/x 2}
+; "delta" nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"] #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"] {:open? true, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"], :acc #{{v/x 2}}}}
+; [#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"]]
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"], :acc #{{v/x 1}}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x7e7ae9af "clojure.core.async.impl.channels.ManyToManyChannel@7e7ae9af"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x6545950e "clojure.core.async.impl.channels.ManyToManyChannel@6545950e"], :acc #{{v/x 2}}}}
+; []
+; Got: nil
+; {#object[clojure.core.async.impl.channels.ManyToManyChannel 0x18948f5a "clojure.core.async.impl.channels.ManyToManyChannel@18948f5a"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x3ae7037f "clojure.core.async.impl.channels.ManyToManyChannel@3ae7037f"], :acc #{}}, #object[clojure.core.async.impl.channels.ManyToManyChannel 0x3ae7037f "clojure.core.async.impl.channels.ManyToManyChannel@3ae7037f"] {:open? false, :other #object[clojure.core.async.impl.channels.ManyToManyChannel 0x18948f5a "clojure.core.async.impl.channels.ManyToManyChannel@18948f5a"], :acc #{{v/x 3}}}}
+; []
+; Channel value: nil
+; Channel value: {}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: {}
+; Channel value: nil
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: #:v{x 1}
+; Channel value: nil
+; Channel value: #:v{x 1}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 3}
+; Channel value: #:v{x 1}
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; 62 tests finished, all passing 👍, ns: 1, vars: 12
+clj꞉parallel-logic.core꞉> 
+; Evaluating file: core.clj
+#'parallel-logic.core/conjoin
+clj꞉parallel-logic.core꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core
+;   parallel-logic.core-test
+
+; Channel value: {}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{y 2, x 1}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{y 2, x 1, z 3}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: {}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: {}
+; Channel value: nil
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 1}
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: #:v{x 1}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 3}
+; Channel value: #:v{x 1}
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; 62 tests finished, all passing 👍, ns: 1, vars: 12
+clj꞉parallel-logic.core꞉> 
+; Syntax error compiling at (test/parallel_logic/core_test.clj:147:4).
+; Unable to resolve symbol: conjoin in this context
+clj꞉parallel-logic.core-test꞉> 
+#object[clojure.core.async.impl.channels.ManyToManyChannel 0x28871b21 "clojure.core.async.impl.channels.ManyToManyChannel@28871b21"]
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: {}
+; Channel value: nil
+#{{}}
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: nil
+nil
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: {}
+; Channel value: nil
+#{{}}
+clj꞉parallel-logic.core-test꞉> 
+; Channel value: nil
+nil
+clj꞉parallel-logic.core-test꞉> 
+; Running tests for the following namespaces:
+;   parallel-logic.core-test
+;   parallel-logic.core
+
+; Channel value: {}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{y 2, x 1}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{y 2, x 1, z 3}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: {}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: {}
+; Channel value: nil
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: #:v{x 1}
+; Channel value: nil
+; Channel value: #:v{x 1}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: nil
+; Channel value: #:v{x 3}
+; Channel value: #:v{x 2}
+; Channel value: #:v{x 1}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{x 5}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: #:v{y v/x}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; Channel value: #:v{x 2}
+; Channel value: nil
+; 62 tests finished, all passing 👍, ns: 1, vars: 12
+clj꞉parallel-logic.core-test꞉> 
